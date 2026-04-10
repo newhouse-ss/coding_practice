@@ -1,0 +1,33 @@
+from collections import deque
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        # I just need to BFS on the original graph, everytime meet a new node from queue, create a cpoy of it, then connect it to its neighbors.
+        if not node:
+            return None
+
+        q = deque([node])
+        clones = {node:Node(node.val)}
+        res = []
+
+        while q:
+            # do something
+            curr_node = q.popleft()
+
+            for neighbor in curr_node.neighbors:
+                if neighbor not in clones:
+                    clones[neighbor] = Node(neighbor.val)
+                    q.append(neighbor)
+                clones[curr_node].neighbors.append(clones[neighbor])
+                
+            
+            print(clones)
+        
+        return clones[node]
